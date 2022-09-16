@@ -1,13 +1,10 @@
-import { InferGetServerSidePropsType } from "next";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
 import GradientLayout from "../components/gradientLayout";
 import prisma from "../lib/prisma";
 import { useMe } from "../lib/hooks";
 
-const Home = ({
-      artists,
-    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = ({ artists }) => {
   const { user } = useMe();
   const fullName =
     user &&
