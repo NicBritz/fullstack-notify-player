@@ -5,9 +5,12 @@ export const formatTime = (timeInSeconds = 0) => {
 };
 
 export const formatDate = (date: Date) => {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  if (date instanceof Date) {
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  }
+  return null;
 };
