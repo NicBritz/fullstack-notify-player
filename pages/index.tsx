@@ -1,60 +1,43 @@
-import { InferGetServerSidePropsType } from "next";
-import { Box, Flex, Text } from "@chakra-ui/layout";
+import { Box, Text, Flex } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
 import GradientLayout from "../components/gradientLayout";
-import prisma from "../lib/prisma";
 import { useMe } from "../lib/hooks";
+import prisma from "../lib/prisma";
 
-// eslint-disable-next-line no-use-before-define
-const Home = ({
-  artists,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = ({ artists }) => {
   const { user } = useMe();
-  const fullName =
-    user &&
-    `${user.firstName[0].toUpperCase()}${user.firstName
-      .slice(1)
-      .toLowerCase()}  
-    ${user.lastName[0].toUpperCase()}${user.lastName.slice(1).toLowerCase()}`;
+
   return (
     <GradientLayout
-      color="cyan"
-      image={user && `https://robohash.org/${fullName}`}
-      subtitle="profile"
-      title={fullName}
-      description={`${user?.playlistsCount} public playlists`}
       roundImage
+      color="gray"
+      subtitle="profile"
+      title={`${user?.firstName} ${user?.lastName}`}
+      description={`${user?.playlistsCount} public playlists`}
+      image="https://dl.dropboxusercontent.com/s/bgiv0ssz3xpotz9/peep.png?dl=0"
     >
       <Box color="white" paddingX="40px">
         <Box marginBottom="40px">
           <Text fontSize="2xl" fontWeight="bold">
             Top artist this month
           </Text>
-          <Text fontSize="xs">Only visible to you</Text>
+          <Text fontSize="md">only visible to you</Text>
         </Box>
         <Flex>
-          {artists.map((artist) => {
-            return (
-              <Box paddingX="10px" width="20%" shadow="2x" key={artist.id}>
-                <Box
-                  bg="gray.900"
-                  borderRadius="4px"
-                  padding="15px"
-                  width="100%"
-                >
-                  <Image
-                    src={`https://robohash.org/${artist.name}?size=300x300`}
-                    borderRadius="100%"
-                    shadow="xl"
-                  />
-                  <Box marginTop="20px">
-                    <Text fontSize="lg">{artist.name}</Text>
-                    <Text fontSize="xs">Artist</Text>
-                  </Box>
+          {artists.map((artist) => (
+            <Box paddingX="10px" width="20%">
+              <Box bg="gray.900" borderRadius="4px" padding="15px" width="100%">
+                <Image
+                  src="https://placekitten.com/300/300"
+                  borderRadius="100%"
+                />
+                <Box marginTop="20px">
+                  <Text fontSize="large">{artist.name}</Text>
+                  <Text fontSize="x-small">Artist</Text>
                 </Box>
               </Box>
-            );
-          })}
+            </Box>
+          ))}
         </Flex>
       </Box>
     </GradientLayout>
@@ -62,11 +45,11 @@ const Home = ({
 };
 
 export const getServerSideProps = async () => {
-  // runs when request, server side
   const artists = await prisma.artist.findMany({});
 
   return {
     props: { artists },
   };
 };
+
 export default Home;
