@@ -21,9 +21,8 @@ const getBGColor = () => {
 };
 
 const Playlist = ({
-  playlist,
-}: // eslint-disable-next-line no-use-before-define
-InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      playlist,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <GradientLayout
       roundImage={false}
@@ -72,7 +71,7 @@ export const getServerSideProps = async ({ query, req }) => {
     },
   });
   return {
-    props: { playlist },
+    props: JSON.parse(JSON.stringify({ playlist })),
   };
 };
 

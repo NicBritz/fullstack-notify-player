@@ -3,6 +3,7 @@ import { Image } from "@chakra-ui/react";
 import GradientLayout from "../components/gradientLayout";
 import prisma from "../lib/prisma";
 import { useMe } from "../lib/hooks";
+import { json } from "stream/consumers";
 
 const Home = ({ artists }) => {
   const { user } = useMe();
@@ -62,7 +63,7 @@ export const getServerSideProps = async () => {
   const artists = await prisma.artist.findMany({});
 
   return {
-    props: { artists },
+    props: JSON.parse(JSON.stringify({ artists })),
   };
 };
 export default Home;
