@@ -5,10 +5,11 @@ import GradientLayout from "../components/gradientLayout";
 import prisma from "../lib/prisma";
 import { useMe } from "../lib/hooks";
 
+// eslint-disable-next-line no-use-before-define
 const Home = ({
   artists,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { user, isLoading } = useMe();
+  const { user } = useMe();
   const fullName =
     user &&
     `${user.firstName[0].toUpperCase()}${user.firstName
@@ -17,7 +18,6 @@ const Home = ({
     ${user.lastName[0].toUpperCase()}${user.lastName.slice(1).toLowerCase()}`;
   return (
     <GradientLayout
-      loading={isLoading}
       color="cyan"
       image={user && `https://robohash.org/${fullName}`}
       subtitle="profile"
