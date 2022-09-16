@@ -1,4 +1,3 @@
-import { InferGetServerSidePropsType } from "next";
 import GradientLayout from "../../components/gradientLayout";
 import prisma from "../../lib/prisma";
 import { validateToken } from "../../lib/auth";
@@ -20,9 +19,7 @@ const getBGColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-const Playlist = ({
-      playlist,
-    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Playlist = ({ playlist }) => {
   return (
     <GradientLayout
       roundImage={false}
